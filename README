@@ -1,0 +1,43 @@
+Tema proiect: Aplicatie de CLI (fsminishell), cu functionalitati asemanatoare celor din LINUX.
+Autor: Andra-Maria Bordincel, 315 CC
+Durata aproximativa implementare tema: 5 zile
+
+"create fs" & "delete fs":
+   Pentru implementarea celor doua comenzi am citit un string de la tastatura utilizand functia "fgets". In momentul in care este citita comanda "create fs", se apeleaza functia "CreateRoot" care aloca memorie pentru directorul root, iar apoi am continuat citirea comenzilor de la tastatura, folosind o bucla "while", pana la intalnirea sirului "delete fs", lucru ce determina incheierea programului si totodata dealocarea memoriei folosite pentru directorul radacina. In urma citirii unei secvente de la tastatura, aceasta este separata in cuvinte, prin functia "strtok", primul cuvant reprezentand mereu comanda propriu-zisa, iar restul cuvintelor fiind restul parametrilor cu care aceasta este apelata. In implementarea temei, am folosit liste simplu inlantuite, considerand ca pentru mine acestea vor fi mai usor de prelucrat.
+
+Pentru sortarea lexicografica a fisierelor/directoarelor am utilizat functia "strcmp".
+
+"touch <filename> <content>":
+   Am implementat aceasta comanda privind-o ca pe o operatie de adaugare a unui nod intr-o lista ordonata, in cazul de fata adaugand un fisier(nod) in mod lexicografic in lista de fisiere. Functia este apelata sub numele "CreateTouch" si primeste ca parametrii directorul curent, capatul listei de fisiere, numele fisierului(al doilea cuvant citit de la tastatura) si continutul acestuia(cel de-al treilea cuvant citit de la tastatura). Functia atribuie memorie pentru fiecare element nou introdus, cat si pentru numele si continutul acestuia, acestea fiind de tip char, apoi incepe sortarea efectiva a nodurilor din lista in functie de numele celui ce trebuie adaugat.
+
+"mkdir <directoryname>":
+   Asemanatoare comenzii "touch", functia "mkdir" reprezinta la randul sau o operatie de adaugare a unui element intr-o lista ordonata, dar de aceasta data lista este cea a directoarelor. Aceasta este apelata sub numele de "CreateMkdir" si primeste ca parametrii directorul curent, capatul listei de directoare si numele sau(al doilea cuvant citit de la tastatura, in acest caz). Am realizat aceasta functie in mod analog functiei touch, alocand memorie pentru elementul introdus si pentru numele acestuia, si sortandu-le in momentul introducerii in functie de nume.
+
+"ls": 
+   Am ales sa realizez comanda "ls", apeland doua functii, "PrintFiles" si "PrintDirs", in care folosesc un pointer pentru parcurgerea fiecarui nod din lista deja ordonata si afisarea acestuia. Functia "PrintFiles" primeste ca parametru capatul listei de fisiere, iar "PrintDirs" primeste capatul listei de directoare.
+
+"pwd":
+   Functia "CreatePwd" primeste ca parametru directorul curent, si salveaza intr-un char auxiliar numele directoarelor prin care trece, cat timp acestea au un director parinte diferit de NULL. Am tratat ca si caz special separat momentul in care ne aflam in directorul radacina, unde este afisat direct string-ul "/".
+
+"cd":
+   Apelata prin numele "CreateCD", aceasta functie, in primul rand, cauta numele directorului in care se doreste trecerea in toata lista de directoare din directorul curent, apoi, modifica valorile atat in cazul directorului curent, cat si cele ale capetelor listei de directoare si a celei de fisiere in cazul in care acesta este gasit. De asemenea, daca este transmis ca si parametru numele "..", trecerea se va efectua modificand directorul curent cu parintele acestuia. In caz contrat celor doua situatii prezentate mai sus, se va afisa mesajul de eroare "Cannot move to <directoryname>: No such directory!".
+
+"tree":
+   Functia "tree", apelata cu numele "CreateTree" afiseaza pe rand fisierele si directoarele din directorul curent, precum si continutul directoarelor in mod recursiv, in functie de adancimea pe care acestea se alfa, adancime ce oirneste de la nivelul 0, care reprezinta nivelul de inceput al directorului curent.
+
+"rm":
+   Functia "rm", apelata prin numele "CreateRm" cauta elementul transmis ca si parametru in lista de fisiere, efectuand cautarea in functie de numele acestuia, tot prin intermediul "strcmp", iar in momentul in care acesta este gasit, este eliminat din lista, eliberand totodata si memoria ocupata daca elementul exita, iar daca nu, este afisat mesajul de eroare "Cannot remove <filename>: No such file!".
+
+"rmdir":
+   Apelata cu numele "CreateRmdir", functia recursiva "rmdir", are ca si scop eliminarea unui director din lista de directoare, in functie de numele acestuia. Pentru implementare, ca operatii se presupun cautarea numelui(transmis ca parametru) in lista si utilizarea functiilor auxiliare "CreateRmallF" si "CreateDeleteRec" pentru stergerea si eliberarea memoriei fisierelor si directoarelor incluse in directorul ce se doreste a fi sters.
+
+"find"(BONUS):
+   Asemanatoare functiei "tree", apelata prin "CreateFind", functia "find" primeste ca parametru un nivel de adancime ce este folosit la randul sau pentru o cautare recursiva a subsirului dat, cuprins intre limitele impuse de marime, lucru realizat prin utilizarea "strstr". Daca acesta este gasit, se vor afisa in ordinea aparitiei subsirului, pe fiecare nivel de adancime, pornind de la cel mai de jos pana la cel impus, numele fisierelor ce il contint in content.
+
+~_BIBLIOGRAFIE_~:
+   Laboraotr 3, grupa 315CC, vineri 10-12: "Liste":
+   https://acs.curs.pub.ro/2019/mod/folder/view.php?id=11279
+ 
+
+   
+
